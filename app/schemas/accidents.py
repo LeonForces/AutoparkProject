@@ -1,12 +1,5 @@
-from fastapi import Query
-from typing import Annotated
-
 from pydantic import BaseModel, field_validator
 import re
-
-#from app.schemas.trips import STrip
-
-from typing import Optional
 
 
 class SAccidentBase(BaseModel):

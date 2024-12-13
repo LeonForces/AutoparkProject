@@ -1,6 +1,3 @@
-from fastapi import Query
-from typing import Annotated
-
 from pydantic import BaseModel, field_validator
 from datetime import date
 import re
@@ -61,8 +58,8 @@ class SDriverCreate(SDriverBase):
 
 class SDriver(SDriverBase):
     id: int
-    cars: Optional[List[SCar]]
-    trips: Optional[List[STrip]]
+    cars: Optional[List[SCar]] = None
+    trips: Optional[List[STrip]] = None
 
     class Config:
         orm_mode = True

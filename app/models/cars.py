@@ -1,6 +1,5 @@
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, Numeric, String
+from sqlalchemy import ForeignKey
 
 from app.core.db import Base
 
@@ -12,7 +11,7 @@ class Cars(Base):
 
     brand: Mapped[str] = mapped_column(nullable=False)
     model: Mapped[str] = mapped_column(nullable=False)
-    lisense_plate: Mapped[str] = mapped_column(nullable=False)
+    license_plate: Mapped[str] = mapped_column(nullable=False)
     reported_issues: Mapped[int] = mapped_column(nullable=False)
     vehicle_age: Mapped[int] = mapped_column(nullable=False)
     is_working: Mapped[bool] = mapped_column(nullable=False)

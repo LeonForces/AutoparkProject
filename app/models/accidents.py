@@ -1,6 +1,5 @@
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, Numeric, String
+from sqlalchemy import ForeignKey
 
 from app.core.db import Base
 

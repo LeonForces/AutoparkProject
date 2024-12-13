@@ -1,6 +1,5 @@
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, Numeric, String
+from sqlalchemy import ForeignKey
 
 from app.core.db import Base
 
@@ -25,7 +24,7 @@ class Trips(Base):
     user = relationship("Users", back_populates="trips")
     driver = relationship("Drivers", back_populates="trips")
     car = relationship("Cars", back_populates="trips")
-    accident = relationship("Accidents", back_populates="trip")
+    accidents = relationship("Accidents", back_populates="trip")
 
     def __str__(self):
 

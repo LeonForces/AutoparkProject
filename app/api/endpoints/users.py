@@ -1,34 +1,40 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, Response, Query
 
 from app.core.exceptions import (IncorrectEmailOrPasswordException,
                             UserAlreadyExistsException)
 from app.api.dependencies.users.auth import (authenticate_user, create_access_token,
                             get_password_hash)
 from app.dao.users import UsersDAO
-from app.api.dependencies.users.dependencies import get_current_user
-from app.models.users import Users
-from app.schemas.users import SUserAuth, SUserRegister
+
+from typing import Annotated
 
 
 router = APIRouter(prefix="/auth", tags=["Auth & Пользователи"])
 
 
 @router.post("/register")
-async def register_user(user_data: SUserRegister):
-    existing_user = await UsersDAO.find_one_or_none(login=user_data.login)
+async def register_user(login: Annotated[str, Query(example="kunzhut", description="Логин")],
+                        password: Annotated[str, Query(example="1234", description="Пароль")],
+                        name: Annotated[str, Query(example="Kunzhut", description="Имя")],
+                        email: Annotated[str, Query(example="vuz@mai.ru", description="Почта")],
+                        telephone: Annotated[str, Query(example="+79257797710", description="Номер телефона")]):
+    existing_user = await UsersDAO.find_one_or_none(login=login)
 
     if existing_user:
         raise UserAlreadyExistsException
 
-    hashed_password = get_password_hash(user_data.password)
-    await UsersDAO.add(login=user_data.login, hashed_password=hashed_password, name=user_data.name, email=user_data.email,
-                       telephone=user_data.telephone)
+    hashed_password = get_password_hash(password)
+    await UsersDAO.add(login=login, hashed_password=hashed_password, name=name, email=email,
+                       telephone=telephone)
+    return "Success"
 
 
 @router.post("/login")
-async def login_user(user_data: SUserAuth, response: Response):
+async def login_user(login: Annotated[str, Query(example="kunzhut", description="Логин")],
+                     password: Annotated[str, Query(example="1234", description="Пароль")],
+                     response: Response):
 
-    user = await authenticate_user(login=user_data.login, password=user_data.password)
+    user = await authenticate_user(login=login, password=password)
 
     if not user:
 

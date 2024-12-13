@@ -1,6 +1,4 @@
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, Numeric, String
 
 from app.core.db import Base
 
@@ -19,7 +17,7 @@ class Drivers(Base):
     driving_experience: Mapped[int] = mapped_column(nullable=False)
     date_of_joining: Mapped[date] = mapped_column(nullable=False)
 
-    cars = relationship("Cars", back_populates="drivers")
+    cars = relationship("Cars", back_populates="driver")
     trips = relationship("Trips", back_populates="driver")
 
     def __str__(self):

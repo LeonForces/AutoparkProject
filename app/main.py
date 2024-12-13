@@ -37,12 +37,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(user_router)
-app.include_router(car_router)
-app.include_router(prometheus_router)
-app.include_router(accident_router)
 app.include_router(driver_router)
-app.include_router(repair_router)
+app.include_router(car_router)
 app.include_router(trip_router)
+app.include_router(accident_router)
+app.include_router(repair_router)
+app.include_router(prometheus_router)
+
 
 origins = [
     "http://localhost:8000",

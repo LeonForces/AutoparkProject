@@ -1,13 +1,6 @@
-from fastapi import Query
-from typing import Annotated
-
 from pydantic import BaseModel, field_validator
 from datetime import date
 import re
-
-#from app.schemas.cars import SCar
-
-from typing import Optional
 
 
 class SRepairBase(BaseModel):
@@ -34,13 +27,6 @@ class SRepairCreate(SRepairBase):
         if not re.match(desc_regex, value):
             raise ValueError("Описание должно содержать от 10 до 200 символов.")
         return value.strip()
-
-    @field_validator('cost', mode='before')
-    def validate_cost(cls, value):
-        cost_regex = r'^\d+\.\d+$'
-        if not re.match(cost_regex, str(value)):
-            raise ValueError("Стоимость должна быть числом с десятичной точкой.")
-        return value
 
     @field_validator('date_start', 'date_finish', mode='before')
     def validate_dates(cls, value):

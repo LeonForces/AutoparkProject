@@ -4,21 +4,22 @@ from typing import Annotated
 from pydantic import BaseModel, field_validator
 import re
 
-#from app.schemas.drivers import SDriver
 from app.schemas.repairs import SRepair
 from app.schemas.trips import STrip
+
 
 from typing import Optional, List
 
 
 class SCarBase(BaseModel):
-    driver_id: int
-    brand: str
-    model: str
-    license_plate: str
-    reported_issues: int
-    vehicle_age: int
-    is_working: bool
+    driver_id: Annotated[int, Query(description="Id водителя")]
+    brand: Annotated[str, Query(description="Бренд")]
+    model: Annotated[str, Query(description="Модель")]
+    license_plate: Annotated[str, Query(description="Номерной знак")]
+    reported_issues: Annotated[int, Query(description="Зарегистрированные проблемы")]
+    vehicle_age: Annotated[int, Query(description="Возраст транспортного средства")]
+    is_working: Annotated[bool, Query(description="В рабочем состоянии")]
+
 
 
 class SCarCreate(SCarBase):
@@ -45,7 +46,7 @@ class SCarCreate(SCarBase):
 
     @field_validator('vehicle_age', mode='before')
     def validate_vehicle_age(cls, value):
-        if value <= 0:
+        if value < 0:
             raise ValueError("Возраст автомобиля должен быть положительным числом.")
         return value
 
@@ -53,8 +54,9 @@ class SCarCreate(SCarBase):
 class SCar(SCarBase):
     id: int
 
-    repairs: Optional[List[SRepair]]
-    trips: Optional[List[STrip]]
+    repairs: Optional[List[SRepair]] = None
+    trips: Optional[List[STrip]] = None
+
 
 
     class Config:

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, field_validator, EmailStr
 
 from app.schemas.trips import STrip
 
@@ -15,7 +15,7 @@ class SUserBase(BaseModel):
 
 class SUserRegister(SUserBase):
     name: str
-    email: str
+    email: EmailStr
     telephone: str
 
     @field_validator('name', mode='before')
@@ -26,15 +26,6 @@ class SUserRegister(SUserBase):
             raise ValueError("Имя должно содержать только буквы, пробелы и дефисы.")
 
         return value.strip()
-
-    @field_validator('email')
-    def validate_email(cls, value):
-        email_regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-
-        if not re.fullmatch(email_regex, value):
-            raise ValueError("Некорректный формат электронной почты.")
-
-        return value.lower().strip()
 
     @field_validator('telephone', mode='before')
     def validate_telephone(cls, value):
@@ -52,7 +43,7 @@ class SUserAuth(SUserBase):
 
 class SUser(SUserBase):
     id: int
-    trips: Optional[List[STrip]]
+    trips: Optional[List[STrip]] = None
 
     class Config:
         orm_mode = True

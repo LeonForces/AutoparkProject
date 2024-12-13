@@ -22,7 +22,7 @@ class UserAdmin(ModelView, model=Users):
 
 
 class CarAdmin(ModelView, model=Cars):
-    column_list = [Cars.id, Cars.brand, Cars.model, Cars.lisense_plate, Cars.reported_issues, Cars.vehicle_age,
+    column_list = [Cars.id, Cars.brand, Cars.model, Cars.license_plate, Cars.reported_issues, Cars.vehicle_age,
                    Cars.is_working]
     can_delete = True
     can_create = False

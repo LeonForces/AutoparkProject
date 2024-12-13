@@ -10,10 +10,10 @@ class CarsDAO(BaseDAO):
     model = Cars
 
     @classmethod
-    async def find_by_number(cls, number: str):
+    async def find_by_number(cls, license_plate: str):
 
         async with async_session_maker() as session:
 
-            query = select(Cars).filter_by(number=number)
+            query = select(Cars).filter_by(license_plate=license_plate)
             result = await session.execute(query)
             return result.one_or_none()

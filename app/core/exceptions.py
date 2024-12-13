@@ -51,6 +51,11 @@ class TokenAbsentException(AutoException):
     detail = "Токен отсутствует"
 
 
+class NotEnterAccountException(AutoException):
+    status_code = status.HTTP_401_UNAUTHORIZED
+    detail = "Пожалуйста, войдите в аккаунт для выполнения этого действия."
+
+
 class IncorrectTokenFormatException(AutoException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Неверный формат токена"
